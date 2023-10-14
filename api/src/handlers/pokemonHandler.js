@@ -1,14 +1,15 @@
-const { getAllPokemonController,getDetailPokemonController,postPokemonController,getPokemonByNameController } = require("../controllers/pokemonController");
+const { getAllPokemonController,getDetailPokemonController,postPokemonController,getPokemonByNameController,getPokemonPrueba } = require("../controllers/pokemonController");
 
 const getPokemonHandler = async ( req,res ) => {
     const { name } = req.query;
     try{
         if( name ){
-            const searchPokemon = await getPokemonByNameController( name );
-            if(searchPokemon.length){
-                res.status( 200 ).json( searchPokemon ) 
+            const uniformName = name.toLowerCase();
+            const searchPokemon = await getPokemonByNameController( uniformName );
+            if( searchPokemon.length ){
+                res.status( 200 ).json( searchPokemon )
             }else{
-                throw new Error( `No se encontro pokemon con el nombre ${ name }` );
+                throw new Error( `No se encontro pokemon con el nombre ${ uniformName }` );
             }
         }else{
             const response = await getAllPokemonController();
@@ -31,9 +32,9 @@ const getPokemonByIdHandler = async ( req,res ) => {
 }
 
 const postPokemonHandler = async ( req,res ) => {
-    const { name,imagen,vida,ataque,defensa,velocidad,altura,peso } = req.body;
+    const { name,imagen,vida,ataque,defensa,velocidad,altura,peso,type } = req.body;
     try {
-        const response = await postPokemonController( name,imagen,vida,ataque,defensa,velocidad,altura,peso );
+        const response = await postPokemonController( name,imagen,vida,ataque,defensa,velocidad,altura,peso,type );
         res.status( 201 ).json( response );
     } catch (error) {
         res.status( 404 ).json( { error: error.message } );

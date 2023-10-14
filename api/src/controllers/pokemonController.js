@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { Pokemon } = require('../db');
+const { Pokemon,Type } = require('../db');
 const { Op } = require('sequelize');
 const { extractInfoToURLPokemon, findStatsToPokemonApi } = require( '../utils/index' );
 
@@ -47,26 +47,47 @@ const getDetailPokemonController = async ( idPokemon,tipoId ) => {
     return await Pokemon.findByPk( idPokemon );
 }
 
-const getPokemonByNameController = async ( name ) => {
+const getPokemonByNameController = async ( namePokemon ) => {
     //filtrar en el api
-    const pokemonAPI = await extractInfoToURLPokemon( API );
-    const nameUniform = name.toLowerCase();
-    const pokemonFilter = pokemonAPI.filter( pokemon => pokemon.name === nameUniform );
+    const pokeAPI = await axios( `${ API }/${ namePokemon }` );
+    const { id,name,height,weight,sprites,stats,types } = await pokeAPI.data;
+
+    const hp = findStatsToPokemonApi( 'hp',stats );
+    const attack = findStatsToPokemonApi( 'attack',stats );
+    const defense = findStatsToPokemonApi( 'defense',stats );
+    const speed = findStatsToPokemonApi( 'speed',stats );
+    const image = sprites.other.dream_world.front_default;
+    const type = types.map( type => {
+        return type.type.name;
+    })
+
+    const pokemonFound = [{
+        id,
+        name,
+        image,
+        hp,
+        attack,
+        defense,
+        speed,
+        height,
+        weight,
+        types: type,
+    }]
 
     //filtrar en la base de datos
     const pokemonByNameDB = await Pokemon.findAll({
         where: {
             name: {
-                [ Op.like ]: `%${ nameUniform }%`,
+                [ Op.like ]: `%${ namePokemon }%`,
             }
         }
     })
 
-    return [ ...pokemonByNameDB,...pokemonFilter ]
+    return [ ...pokemonByNameDB,...pokemonFound ]
 }
 
-const postPokemonController = async ( name,imagen,vida,ataque,defensa,velocidad,altura,peso ) => {
-    return await Pokemon.create({
+const postPokemonController = async ( name,imagen,vida,ataque,defensa,velocidad,altura,peso,type ) => {
+    const newPokemon = await Pokemon.create({
         name,
         imagen,
         vida,
@@ -76,11 +97,20 @@ const postPokemonController = async ( name,imagen,vida,ataque,defensa,velocidad,
         altura,
         peso
     })
+
+    type.forEach( async ( type ) => {
+        const typesDB = await Type.findOne({
+            where: { name: type }
+        })
+        await newPokemon.addType( typesDB );
+    })
+
+    return newPokemon;
 }
 
 module.exports = {
     getAllPokemonController,
     getDetailPokemonController,
     postPokemonController,
-    getPokemonByNameController
+    getPokemonByNameController,
 }

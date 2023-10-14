@@ -4,9 +4,9 @@ const getTypesController = require("../controllers/typesControllers");
 const getTypesHandler = async ( req,res ) => {
     try {
         const response = await getTypesController();
-        res.status( 200 ).send( response );
+        res.status( 200 ).json( response );
     } catch (error) {
-        res.status( 404 ).json( { error: error.message } )
+        res.status( 400 ).json( { error: error.message } );
     }
 }
 
