@@ -1,0 +1,14 @@
+#contentForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #F86A1A 0%, rgb(78, 59, 49) 100%);
+}
+
+#contentForm form{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    height: 50%;
+}

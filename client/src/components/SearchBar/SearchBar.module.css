@@ -1,0 +1,35 @@
+#contentFieldSearch{
+    display: flex;
+}
+
+#inputSearchPokemon{
+    width: 280px;
+    height: 33px;
+    border-radius: 9px 0px 0px 9px;
+    border-left: 0.5px solid #FFEDDF;
+    border-top: 0.5px solid #FFEDDF;
+    border-bottom: 0.5px solid #FFEDDF;
+    background-color: #9B5126;
+    outline: #ffeddf00;
+    padding-left: 10px;
+    color: #FFEDDF;
+}
+
+#contentSVG{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 39px;
+    height: 35px;
+    background-color: #C5D86D;
+    border-radius: 0px 9px 9px 0px;
+    border-right: 0.5px solid #FFEDDF;
+    border-top: 0.5px solid #FFEDDF;
+    border-bottom: 0.5px solid #FFEDDF;
+}
+
+#searchIcon{
+    width: 23px;
+    height: 23px;
+    flex-shrink: 0;
+}
