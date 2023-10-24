@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_TYPES,GET_POKEMONS } from './action-types';
+import { GET_TYPES,GET_POKEMONS, FILTER_TYPE, RESET, ORDER } from './action-types';
 
 export const getTypes = () => {
     return async function( dispatch ){
@@ -26,6 +26,44 @@ export const getPokemons = () => {
             })
         } catch (error) {
             alert( error.response.data.error );
+        }
+    }
+}
+
+export const filterTypePokemon = ( type ) => {
+    return async function( dispatch ){
+        try {
+            dispatch({
+                type: FILTER_TYPE,
+                payload: type
+            })
+        } catch (error) {
+            alert( error.response.data.error );
+        }
+    }
+}
+
+export const resetFilter = () => {
+    return async function( dispatch ){
+        try{
+            dispatch({
+                type: RESET,
+            })       
+        } catch( error ){
+            alert( error.response.data.error );
+        }
+    }
+}
+
+export const orderPokemonAction = ( order ) => {
+    return async function( dispatch ){
+        try {
+            dispatch({
+                type: ORDER,
+                payload: order
+            })
+        } catch (error) {
+            // alert( error.response.data.error );
         }
     }
 }

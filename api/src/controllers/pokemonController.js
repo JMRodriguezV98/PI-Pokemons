@@ -100,19 +100,19 @@ const getPokemonByNameController = async ( namePokemon ) => {
     return [ ...pokemonByNameDB ]
 }
 
-const postPokemonController = async ( name,imagen,vida,ataque,defensa,velocidad,altura,peso,type ) => {
+const postPokemonController = async ( name,image,hp,attack,defense,speed,height,weight,types ) => {
     const newPokemon = await Pokemon.create({
         name,
-        imagen,
-        vida,
-        ataque,
-        defensa,
-        velocidad,
-        altura,
-        peso
+        image,
+        hp,
+        attack,
+        defense,
+        speed,
+        height,
+        weight
     })
 
-    type.forEach( async ( type ) => {
+    types.forEach( async ( type ) => {
         const typesDB = await Type.findOne({
             where: { name: type }
         })

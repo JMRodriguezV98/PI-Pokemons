@@ -32,9 +32,9 @@ const getPokemonByIdHandler = async ( req,res ) => {
 }
 
 const postPokemonHandler = async ( req,res ) => {
-    const { name,imagen,vida,ataque,defensa,velocidad,altura,peso,type } = req.body;
+    const { name,image,hp,attack,defense,speed,height,weight,types } = req.body;
     try {
-        const response = await postPokemonController( name,imagen,vida,ataque,defensa,velocidad,altura,peso,type );
+        const response = await postPokemonController( name,image,hp,attack,defense,speed,height,weight,types );
         res.status( 201 ).json( response );
     } catch (error) {
         res.status( 404 ).json( { error: error.message } );

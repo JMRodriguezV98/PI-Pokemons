@@ -6,6 +6,11 @@
     background: linear-gradient(180deg, #F86A1A 0%, rgb(78, 59, 49) 100%);
 }
 
+#muestra{
+    background: linear-gradient(180deg, #F86A1A 0%, rgb(78, 59, 49) 100%);
+    height: auto;
+}
+
 #footer{
     margin-top: 30px;
     width: 100%;

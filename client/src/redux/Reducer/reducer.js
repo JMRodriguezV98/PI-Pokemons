@@ -1,12 +1,16 @@
 //Importar las actions-types
 
-import { GET_POKEMONS, GET_TYPES } from "../Actions/action-types";
+import { FILTER_TYPE, GET_POKEMONS, GET_TYPES, ORDER, RESET } from "../Actions/action-types";
 
 //Inicializar el initialState
 
 let initialState = {
     allPokemons: [],
-    allTypes: []
+    allTypes: [],
+    allPokemonsBackup: [],
+    pokemonFiltered: [],
+    pokemonOrden: [],
+    filter: false,
 };
 
 //Definir el rootReducer
@@ -21,13 +25,47 @@ const rootReducer = ( state = initialState, action ) => {
         case GET_POKEMONS:
             return {
                 ...state,
-                allPokemons: action.payload
+                allPokemons: action.payload,
+                allPokemonsBackup: action.payload
             }
 
-        break;
+        case FILTER_TYPE:
+            const filterByType =  [ ...state.allPokemonsBackup ].filter( ( pokemon ) => pokemon.types.includes( action.payload ) );
+            return {
+                ...state,
+                allPokemons: filterByType,
+                pokemonFiltered: filterByType,
+                filter: true
+            }
+
+        case RESET:
+            return{
+                ...state,
+                filter: false,
+                allPokemons: state.allPokemonsBackup
+            }
+
+        case ORDER:
+            let filterByOrder = [ ...state.allPokemonsBackup ];
+            if( action.payload === 'AZ' ){
+                filterByOrder = filterByOrder.sort( ( a,b ) => {
+                    return a.name.localeCompare( b.name );
+                })
+            }
+
+            if( action.payload === 'ZA' ){
+                filterByOrder = filterByOrder.sort( ( a,b ) => {
+                    return b.name.localeCompare( a.name );
+                })
+            }
+
+            return{
+                ...state,
+                allPokemons: filterByOrder,
+                pokemonOrden: filterByOrder,
+            }
     
         default: return state
-            break;
     }
 }
 

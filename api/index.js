@@ -22,9 +22,9 @@ const { conn } = require('./src/db.js');
 const getTypesHandler = require('./src/handlers/typesHandler.js');
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: true }).then(async() => {
   server.listen(3001, () => {
     // getTypesHandler();
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
+    console.log('%s listening at 3001'); // eslint-disablez-line no-console
   });
 });

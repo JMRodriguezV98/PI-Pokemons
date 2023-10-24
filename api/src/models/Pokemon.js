@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('pokemon', {
-    ID: {
+    id: {
       /*
       Aqui agrego el tipo de uuid, el cual segun la documentacion de sequelize
       me permite agregar de manera automatica un id, el cual se encuentra 
@@ -24,32 +24,32 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true,
     },
-    imagen: {
+    image: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         isUrl: true,
       }
     },
-    vida: {
+    hp: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    ataque:{
+    attack:{
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    defensa: {
+    defense: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    velocidad: {
+    speed: {
       type: DataTypes.INTEGER
     },
-    altura: {
+    height: {
       type: DataTypes.INTEGER
     },
-    peso: {
+    weight: {
       type: DataTypes.INTEGER
     }
   }, { 
