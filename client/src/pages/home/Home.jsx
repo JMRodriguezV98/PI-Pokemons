@@ -1,17 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import style from './Home.module.css'
 import Cards from '../../components/Cards/Cards'
+import { getPokemons } from '../../redux/Actions/actions'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Home = () => {
 
-  const allPokemons = [
-    {nombre: 'Bulbasaur',types: ['electrico','normal'], imagen: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png' },
-    {nombre: 'charmander',types: ['fuego','dragon'], imagen: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png' },
-    {nombre: 'snorlax',types: ['normal','hada'], imagen: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png' },
-    {nombre: 'snorlax',types: ['normal','hada'], imagen: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png' },
-    {nombre: 'snorlax',types: ['normal','hada'], imagen: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png' },
-    {nombre: 'snorlax',types: ['normal','hada'], imagen: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png' },
-  ]
+  const dispatch = useDispatch();
+
+  const allPokemons = useSelector( (state) => state.allPokemons );
+
+  useEffect( () => {
+    dispatch( getPokemons() );
+  },[])
 
   return (
     <>

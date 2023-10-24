@@ -1,19 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './CreatePokemon.module.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { getTypes, postPokemon } from '../../redux/Actions/actions';
 
 const CreatePokemon = () => {
+
+  const dispatch = useDispatch();
+
+  const allTypes = useSelector( (state) => state.allTypes )
+
+  useEffect( () => {
+    dispatch( getTypes() );
+  },[])
   
-  const types = ['electrico','normal','fuego','agua','volador'];
   const [ state,setState ] = useState({
-    nombre:'',
-    imagen:'',
-    vida: 0,
-    ataque: 0,
-    defensa: 0,
-    velocidad: 0,
-    altura: 0,
-    peso: 0,
-    types: []
+    name:'',
+    image:'',
+    hp: 0,
+    attack: 0,
+    defense: 0,
+    speed: 0,
+    height: 0,
+    weight: 0,
+    type: []
   })
 
   const [ errors,setErrors ] = useState({
@@ -25,44 +34,22 @@ const CreatePokemon = () => {
     velocidad: '',
     altura: '',
     peso: '',
-    types: ''
+    type: ''
   })
 
   const validate = ( state,name ) => {
-    if( name === 'nombre'){
+    if( name === 'name'){
       if( state.nombre === '' ){
         setErrors({
-          ...errors, nombre: 'Campo Requerido'
+          ...errors, 
+          nombre: 'Campo Requerido'
         })
       }else{
         setErrors({
-          ...errors,nombre: ''
+          ...errors,
+          nombre: ''
         })
       }
-    }
-    if( name === 'imagen'){
-      
-    }
-    if( name === 'vida'){
-      
-    }
-    if( name === 'ataque'){
-      
-    }
-    if( name === 'defensa'){
-      
-    }
-    if( name === 'velocidad'){
-      
-    }
-    if( name === 'altura'){
-      
-    }
-    if( name === 'peso'){
-      
-    }
-    if( name === 'types'){
-      
     }
   }
 
@@ -80,10 +67,10 @@ const CreatePokemon = () => {
   }
 
   const handleChange = ( event ) => {
-    if( event.target.name === 'types'){
+    if( event.target.name === 'type'){
       setState({
         ...state,
-        types: [...state.types,event.target.value ]
+        type: [...state.type,event.target.value ]
       })
     }else{
       setState({
@@ -100,7 +87,7 @@ const CreatePokemon = () => {
 
   const handleSubmit = ( event ) => {
     event.preventDefault();
-    console.log( state );
+    dispatch( postPokemon( state ) );
   }
   
   return (
@@ -108,8 +95,12 @@ const CreatePokemon = () => {
       <div id={ style.contentForm }>
         <form onSubmit={ handleSubmit }>
           <label>Nombre:</label>
-          <input type="text" name='nombre' onChange={ handleChange }/>
-          <div><p>{errors.nombre}</p></div>
+          <input type="text" name='name' onChange={ handleChange }/>
+          <div>
+            <p>
+              { errors.nombre }
+            </p>
+          </div>
           <label>Imagen:</label>
           <input type="text" name='imagen' onChange={ handleChange }/>
           <label>Vida:</label>
@@ -125,12 +116,15 @@ const CreatePokemon = () => {
           <label>Peso</label>
           <input type="text" name='peso' onChange={ handleChange }/>
           <label>Types:</label>
-          <select onChange={ handleChange } name="types" >
+          <select onChange={ handleChange } name="type" >
             <option hidden>Selecciona el tipo</option>
             { 
-              types.map( type => <option key={ type } value={ type }>{ type }</option>)
+              allTypes.map( type => <option key={ type } value={ type }>{ type }</option>)
             }
           </select>
+          <div>
+            { state.type.map( ( type ) => <span key={ type } >{ type }/</span> ) }
+          </div>
           <input disabled={ disabledFunction() } type="submit" />
         </form>
       </div>

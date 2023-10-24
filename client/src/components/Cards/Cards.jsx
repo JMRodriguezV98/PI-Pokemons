@@ -2,16 +2,16 @@ import React from 'react'
 import Card from '../Card/Card'
 import style from './Cards.module.css'
 
-const Cards = ({allPokemons}) => {
+const Cards = ( {allPokemons} ) => {
   return (
     <>
         <div id={ style.contentFieldCards } >
           { allPokemons.map( pokemon => 
             <Card  
-              key={ pokemon.nombre } 
-              nombre={ pokemon.nombre } 
+              key={ pokemon.id } 
+              nombre={ pokemon.name } 
               types={ pokemon.types } 
-              image={ pokemon.imagen } 
+              image={ pokemon.image } 
             />
           )}
         </div>

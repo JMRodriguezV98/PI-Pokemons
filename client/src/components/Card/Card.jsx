@@ -15,13 +15,6 @@ const Card = ({ nombre,types,image }) => {
           <h3>{ types }</h3>
         </div>
       </div>
-        {/* <div>
-           <img src="" alt={ image } /> 
-        </div>
-        <div>
-            <h4>Nombre: { nombre }</h4>
-            <h5>tipos: { types }</h5>
-        </div> */}
     </>
   )
 }
